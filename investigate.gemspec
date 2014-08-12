@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["skyler"]
   spec.email         = ["skyler@opendns.com"]
   spec.summary       = "Ruby API for the OpenDNS Security Graph"
-  spec.homepage      = ""
+  spec.description   = spec.summary
+  spec.homepage      = 'https://github.com/dead10ck/ruby-investigate'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -17,5 +18,5 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rest-client"
+  spec.add_runtime_dependency "rest-client", "~> 1.7"
 end
