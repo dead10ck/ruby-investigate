@@ -5,46 +5,48 @@
 In your Ruby script, you can use it like this:
 
 ```ruby
-require 'sgraph'
+require 'investigate'
 
-sg = SGraph.new('/path/to/your/umbrella-cert.pem', '/path/to/your/umbrella-key.pem')
+inv = Investigate.new('f29be9cc-f833-4a9a-b984-19dc4d5186ac')
 
-# get IP information
-data = sg.get_ip('208.64.121.161')
-# use data
+# get domain categorization and status
+inv.categorization('amazon.com')
 
-# get domain information
-data = sg.get_domain('www.test.com')
-# use data
+# categorization and status on a list of domains with labels
+domains = ['www.amazon.com', 'www.opendns.com', 'bibikun.ru']
+inv.categorization(domains, true)
 
-# see if a list of domains is infected
-data = sg.get_infected(['www.test.com', 'bibikun.ru'])
+# cooccurrences
+inv.cooccurrences('test.com')
 
-# get traffic information over time for a domain
-start = Time.local(2013, "Dec", 13)
-stop = Time.now
-data = sg.get_traffic('wikileaks.org', start, stop)
+# related domains
+inv.related("test.com")
 
-# etc.
+# security features
+inv.security("test.com")
+
+# domain tags
+inv.domain_tags('bibikun.ru')
+
+# domain RR history
+inv.rr_history('bibikun.ru')
+
+# IP RR history
+inv.rr_history('50.23.225.49')
+...
 ```
 
 ## Installation
-
-### Install siphash-ruby
-Unfortunately, [emboss/siphash-ruby](https://github.com/emboss/siphash-ruby) seems to be the only decent SipHash gem, and it is not on RubyForge, so manual installation is necessary.
-
+You can do:
 ```sh
-git clone https://github.com/emboss/siphash-ruby.git
-cd siphash-ruby
-gem build siphash-ruby.gemspec
-gem install {generated_name}.gem
+gem install investigate
 ```
 
-### Install sgraph
+or install manually with:
 ```sh
-git clone git@github.office.opendns.com:skyler/ruby-sgraph.git
-cd ruby-sgraph
+git clone git@github.com:dead10ck/ruby-investigate.git
+cd ruby-investigate
 bundle install
-gem build sgraph.gemspec
+gem build investigate.gemspec
 gem install {generated_name}.gem
 ```
