@@ -52,8 +52,8 @@ describe "Investigate" do
     has_keys?(data, ['found', 'tb1'])
   end
 
-  it "does get_cooccurrences() correctly" do
-    data = @sg.get_cooccurrences('www.test.com')
+  it "does cooccurrences() correctly" do
+    data = @sg.cooccurrences('www.test.com')
     has_keys?(data, ['found', 'pfs2'])
   end
 

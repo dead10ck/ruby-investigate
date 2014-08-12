@@ -46,6 +46,13 @@ class Investigate
     end
   end
 
+  # Get the cooccurrences of the given domain.
+  #
+  # For details, see https://sgraph.opendns.com/docs/api#co-occurrences
+  def cooccurrences(domain)
+    get("/recommendations/name/#{domain}.json")
+  end
+
   # Make a GET call to '/dnsdb/ip/a/{ip}.json'.
   # Return the JSON object in the response
   def get_ip(ip)
@@ -68,12 +75,6 @@ class Investigate
   # Return the JSON object in the response
   def get_score(domain)
     get("/label/rface-gbt/name/" + domain + ".json")
-  end
-
-  # Make a GET call to '/recommendations/name/{domain}.json'.
-  # Return the JSON obje
-  def get_cooccurrences(domain)
-    get("/recommendations/name/" + domain + ".json")
   end
 
   # Make a GET call to '/security/name/{domain}.json'.
