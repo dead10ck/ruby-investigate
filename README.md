@@ -33,7 +33,9 @@ inv.rr_history('bibikun.ru')
 
 # IP RR history
 inv.rr_history('50.23.225.49')
-...
+
+# latest domains for an IP
+inv.latest_domains('46.161.41.43')
 ```
 
 ## Installation
