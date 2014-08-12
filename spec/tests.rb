@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'time'
-require 'pp'
 
 describe "Investigate" do
   before(:all) do
@@ -13,7 +12,7 @@ describe "Investigate" do
     end
   end
 
-  it "does get_categorization() correctly" do
+  it "does categorization() correctly" do
     # test a single domain
     cat_keys = ["status", "security_categories", "content_categories"]
     resp_json = @sg.categorization('www.amazon.com')
@@ -37,14 +36,21 @@ describe "Investigate" do
     lambda { @sg.categorization({"blah" => "hello"}) }.should raise_error
   end
 
-  it "does get_ip() correctly" do
-    data = @sg.get_ip('208.64.121.161')
+  it "does rr_history() correctly" do
+    # query an IP
+    data = @sg.rr_history('208.64.121.161')
     has_keys?(data, ['features', 'rrs'])
-  end
 
-  it "does get_domain() correctly" do
-    data = @sg.get_domain('www.test.com')
+    # query a domain
+    data = @sg.rr_history('www.test.com')
     has_keys?(data, ['features', 'rrs_tf'])
+
+    # query a domain with a different query_type
+    data = @sg.rr_history('www.test.com', 'NS')
+    has_keys?(data, ['rrs_tf'])
+
+    # trying an unsupported query type should raise an error
+    lambda { @sg.rr_history('www.test.com', 'AFSDB') }.should raise_error
   end
 
   it "does related_domains() correctly" do

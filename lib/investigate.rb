@@ -9,6 +9,13 @@ class Investigate
   VERSION = '0.0.1'
   SGRAPH_URL = 'https://investigate.api.opendns.com'
   SIPHASH_KEY = 'Umbrella/OpenDNS'
+  SUPPORTED_DNS_TYPES = [
+      "A",
+      "NS",
+      "MX",
+      "TXT",
+      "CNAME"
+  ]
 
   # Builds a new Investigate object.
   def initialize(key)
@@ -74,19 +81,35 @@ class Investigate
     get("/domains/#{domain}/latest_tags")
   end
 
+  # Get the RR (Resource Record) History of the given domain or IP.
+  # The default query type is for 'A' records, but the following query types
+  # are supported:
+  #
+  # A, NS, MX, TXT, CNAME
+  #
+  # For details, see https://sgraph.opendns.com/docs/api#dnsrr_domain
+  def rr_history(query, query_type="A")
+    raise "unsupported query type" unless SUPPORTED_DNS_TYPES.include?(query_type)
+    if query =~ /(\d{1,3}\.){3}\d{1,3}/
+      get_ip(query, query_type)
+    else
+      get_domain(query, query_type)
+    end
+  end
+
+  private
+
   # Make a GET call to '/dnsdb/ip/a/{ip}.json'.
   # Return the JSON object in the response
-  def get_ip(ip)
-    get("/dnsdb/ip/a/" + ip + ".json")
+  def get_ip(ip, query_type)
+    get("/dnsdb/ip/#{query_type}/#{ip}.json")
   end
 
   # Make a GET call to '/dnsdb/name/a/{domain}.json'.
   # Return the JSON object in the response
-  def get_domain(domain)
-    get("/dnsdb/name/a/" + domain + ".json")
+  def get_domain(domain, query_type)
+    get("/dnsdb/name/#{query_type}/#{domain}.json")
   end
-
-  private
 
   def get_categorization(domain, labels)
     params = labels ? { "showLabels" => true } : {}
