@@ -30,6 +30,22 @@ class Investigate
     JSON.parse(resp)
   end
 
+  # Get the domain status and categorization of a domain or list of domains.
+  # 'domains' can be either a single domain, or a list of domains.
+  # Setting 'labels' to True will give back categorizations in human-readable
+  # form.
+  #
+  # For more detail, see https://sgraph.opendns.com/docs/api#categorization
+  def categorization(domains, labels=false)
+    if domains.kind_of?(Array)
+      post_categorization(domains, labels)
+    elsif domains.kind_of?(String)
+      get_categorization(domains, labels)
+    else
+      raise "domains must be a string or a list of strings"
+    end
+  end
+
   # Make a GET call to '/dnsdb/ip/a/{ip}.json'.
   # Return the JSON object in the response
   def get_ip(ip)
@@ -64,5 +80,18 @@ class Investigate
   # Return the JSON object
   def get_security(domain)
     get("/security/name/" + domain + ".json")
+  end
+
+  private
+
+  def get_categorization(domain, labels)
+    params = labels ? { "showLabels" => true } : {}
+    get("/domains/categorization/#{domain}", params)
+  end
+
+  def post_categorization(domains, labels)
+    params = labels ? { "showLabels" => true } : {}
+    data = JSON.generate(domains)
+    post("/domains/categorization/", data, params)
   end
 end

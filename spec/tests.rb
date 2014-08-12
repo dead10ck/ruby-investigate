@@ -13,6 +13,30 @@ describe "Investigate" do
     end
   end
 
+  it "does get_categorization() correctly" do
+    # test a single domain
+    cat_keys = ["status", "security_categories", "content_categories"]
+    resp_json = @sg.categorization('www.amazon.com')
+    expect(resp_json.has_key?('www.amazon.com')).to eq true
+    has_keys?(resp_json['www.amazon.com'], cat_keys)
+
+    # test a domain with labels
+    resp_json = @sg.categorization('www.amazon.com', true)
+    expect(resp_json.has_key?('www.amazon.com')).to eq true
+    has_keys?(resp_json['www.amazon.com'], cat_keys)
+
+    # test a list of domains with labels
+    domains = ['www.amazon.com', 'www.opendns.com', 'bibikun.ru']
+    resp_json = @sg.categorization(domains, true)
+    has_keys?(resp_json, domains)
+    domains.each do |d|
+      has_keys?(resp_json[d], cat_keys)
+    end
+
+    # calling with the wrong kind of object should raise an error
+    lambda { @sg.categorization({"blah" => "hello"}) }.should raise_error
+  end
+
   it "does get_ip() correctly" do
     data = @sg.get_ip('208.64.121.161')
     has_keys?(data, ['features', 'rrs'])
