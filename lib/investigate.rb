@@ -5,10 +5,9 @@ require 'uri'
 require 'siphash'
 
 # Ruby API for the OpenDNS Security Graph
-class SGraph
+class Investigate
   VERSION = '0.0.1'
-  SGRAPH_URL = 'https://sgraph.umbrella.com'
-  SGRAPH_SIPHASH_KEY = 'Umbrella/OpenDNS'
+  SGRAPH_URL = 'https://investigate.api.opendns.com'
 
   # Builds a new SGraph object.
   # cert and key should be the string path to your certificate and key PEM files,
