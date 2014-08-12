@@ -47,8 +47,8 @@ describe "Investigate" do
     has_keys?(data, ['features', 'rrs_tf'])
   end
 
-  it "does get_related_domains() correctly" do
-    data = @sg.get_related_domains('www.test.com')
+  it "does related_domains() correctly" do
+    data = @sg.related_domains('www.test.com')
     has_keys?(data, ['found', 'tb1'])
   end
 
@@ -57,8 +57,8 @@ describe "Investigate" do
     has_keys?(data, ['found', 'pfs2'])
   end
 
-  it "does get_security() correctly" do
-    data = @sg.get_security('www.test.com')
+  it "does security() correctly" do
+    data = @sg.security('www.test.com')
     keys = [
       "dga_score",
       "perplexity",
@@ -81,5 +81,13 @@ describe "Investigate" do
       "found"
     ]
     has_keys?(data, keys)
+  end
+
+  it "does domain_tags() correctly" do
+    resp_json = @sg.domain_tags('bibikun.ru')
+    resp_json.each do |tag_entry|
+      has_keys?(tag_entry, ['category', 'period', 'url'])
+      has_keys?(tag_entry['period'], ['begin', 'end'])
+    end
   end
 end

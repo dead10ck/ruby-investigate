@@ -53,6 +53,27 @@ class Investigate
     get("/recommendations/name/#{domain}.json")
   end
 
+  # Get the related domains of the given domain.
+  #
+  # For details, see https://sgraph.opendns.com/docs/api#relatedDomains
+  def related_domains(domain)
+    get("/links/name/#{domain}.json")
+  end
+
+  # Get the Security Information for the given domain.
+  #
+  # For details, see https://sgraph.opendns.com/docs/api#securityInfo
+  def security(domain)
+    get("/security/name/#{domain}.json")
+  end
+
+  # Get the domain tagging dates for the given domain.
+  #
+  # For details, see https://sgraph.opendns.com/docs/api#latest_tags
+  def domain_tags(domain)
+    get("/domains/#{domain}/latest_tags")
+  end
+
   # Make a GET call to '/dnsdb/ip/a/{ip}.json'.
   # Return the JSON object in the response
   def get_ip(ip)
@@ -63,24 +84,6 @@ class Investigate
   # Return the JSON object in the response
   def get_domain(domain)
     get("/dnsdb/name/a/" + domain + ".json")
-  end
-
-  # Make a GET call to '/links/name/{domain}.json'.
-  # Return the JSON object in the response
-  def get_related_domains(domain)
-    get("/links/name/" + domain + ".json")
-  end
-
-  # Make a GET call to '/label/rface-gbt/name/{domain}.json'.
-  # Return the JSON object in the response
-  def get_score(domain)
-    get("/label/rface-gbt/name/" + domain + ".json")
-  end
-
-  # Make a GET call to '/security/name/{domain}.json'.
-  # Return the JSON object
-  def get_security(domain)
-    get("/security/name/" + domain + ".json")
   end
 
   private
