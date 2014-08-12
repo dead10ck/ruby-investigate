@@ -1,8 +1,5 @@
 require 'json'
-require 'openssl'
 require 'rest-client'
-require 'uri'
-require 'siphash'
 
 # Ruby API for the OpenDNS Security Graph
 class Investigate
