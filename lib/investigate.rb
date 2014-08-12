@@ -3,7 +3,7 @@ require 'rest-client'
 
 # Ruby API for the OpenDNS Security Graph
 class Investigate
-  VERSION = '1.0.0'
+  VERSION = '1.1.0'
   SGRAPH_URL = 'https://investigate.api.opendns.com'
   SIPHASH_KEY = 'Umbrella/OpenDNS'
   SUPPORTED_DNS_TYPES = [
