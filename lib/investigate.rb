@@ -18,15 +18,15 @@ class Investigate
 
   # Generic GET call to the API with the given URI
   # Parses the response into a JSON object
-  def get(uri)
-    resp = @res[uri].get()
+  def get(uri, params={})
+    resp = @res[uri].get(:params => params)
     JSON.parse(resp)
   end
 
   # Generic POST call to the API with the given URI and body
   # Parses the response into a JSON object
-  def post(uri, body)
-    resp = @res[uri].post(body)
+  def post(uri, body, params)
+    resp = @res[uri].post(body, :params => params)
     JSON.parse(resp)
   end
 
