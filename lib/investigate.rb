@@ -94,6 +94,13 @@ class Investigate
     end
   end
 
+  # Gets the latest known malicious domains associated with the given
+  # IP address, if any. Returns the list of malicious domains.
+  def latest_domains(ip)
+    resp = get("/ips/#{ip}/latest_domains")
+    resp.map { |h| h['name'] }
+  end
+
   private
 
   # Make a GET call to '/dnsdb/ip/a/{ip}.json'.

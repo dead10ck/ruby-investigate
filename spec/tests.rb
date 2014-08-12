@@ -96,4 +96,10 @@ describe "Investigate" do
       has_keys?(tag_entry['period'], ['begin', 'end'])
     end
   end
+
+  it "does latest_domains() correctly" do
+    resp_json = @sg.latest_domains('46.161.41.43')
+    expect(resp_json.kind_of?(Array)).to eq true
+    expect(resp_json.length).to be > 0
+  end
 end
