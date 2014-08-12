@@ -1,15 +1,14 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sgraph'
+require 'investigate'
 
 Gem::Specification.new do |spec|
-  spec.name          = "sgraph"
-  spec.version       = SGraph::VERSION
+  spec.name          = "investigate"
+  spec.version       = Investigate::VERSION
   spec.authors       = ["skyler"]
   spec.email         = ["skyler@opendns.com"]
   spec.summary       = "Ruby API for the OpenDNS Security Graph"
-  spec.description   = ""
   spec.homepage      = ""
   spec.license       = "MIT"
 

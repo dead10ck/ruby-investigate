@@ -1,9 +1,10 @@
 require 'spec_helper'
 require 'time'
+require 'pp'
 
-describe "SGraph" do
+describe "Investigate" do
   before(:all) do
-    @sg = SGraph.new(CERT_FILE, KEY_FILE)
+    @sg = Investigate.new(ENV['INVESTIGATE_KEY'])
   end
 
   def has_keys?(data={}, keys=[])
@@ -34,28 +35,27 @@ describe "SGraph" do
 
   it "does get_security() correctly" do
     data = @sg.get_security('www.test.com')
-    has_keys?(data, ["asn_score", "crank", "dga_score", "entropy",
-      "fastflux", "found", "frequencyrank", "geodiversity", "geodiversity_normalized",
-      "geoscore", "handlings", "ks_test", "pagerank", "perplexity", "popularity",
-      "prefix_score", "rip_score", "securerank", "securerank2", "tags", "tld_geodiversity"])
+    keys = [
+      "dga_score",
+      "perplexity",
+      "entropy",
+      "securerank2",
+      "pagerank",
+      "asn_score",
+      "prefix_score",
+      "rip_score",
+      "fastflux",
+      "popularity",
+      "geodiversity",
+      "geodiversity_normalized",
+      "tld_geodiversity",
+      "geoscore",
+      "ks_test",
+      "handlings",
+      "attack",
+      "threat_type",
+      "found"
+    ]
+    has_keys?(data, keys)
   end
-
-  it "does get_whois() correctly" do
-    data = @sg.get_whois('www.test.com')
-    has_keys?(data, ['found'])
-  end
-
-  it "does get_infected() correctly" do
-    data = @sg.get_infected(['www.test.com', 'bibikun.ru'])
-    has_keys?(data, ['scores'])
-    has_keys?(data['scores'], ['www.test.com', 'bibikun.ru'])
-  end
-
-  it "does get_traffic() correctly" do
-    start = Time.local(2013, "Dec", 13)
-    stop = Time.now
-    data = @sg.get_traffic('wikileaks.org', start, stop)
-    has_keys?(data, ["elapsed", "function", "query", "response"])
-  end
-
 end

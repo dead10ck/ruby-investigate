@@ -1,1 +1,1 @@
-require_relative '../investigate.rb'
+require_relative '../lib/investigate.rb'
