@@ -7,7 +7,7 @@ In your Ruby script, you can use it like this:
 ```ruby
 require 'investigate'
 
-inv = Investigate.new('f29be9cc-f833-4a9a-b984-19dc4d5186ac')
+inv = Investigate.new('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
 
 # get domain categorization and status
 inv.categorization('amazon.com')
